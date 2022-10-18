@@ -1,23 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
+  const [mili, setMili] = useState(0);
+  const [secund, setSecund] = useState(0);
+  const [minut, setMinut] = useState(0);
+
+  let milisec;
+  useEffect(() => {
+    milisec = setInterval(() => {
+      setMili(mili + 1);
+    }, 10);
+    return () => clearInterval(milisec);
+  }, [mili]);
+
+  if (mili === 99) {
+    setSecund(secund + 1);
+    setMili(0);
+  }
+  if (secund === 59) {
+    setSecund(0);
+    setMinut(minut + 1);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="stopwatch">
+      <h1>Timer</h1>
+      <span>
+        {minut < 10 ? "0" + minut : minut}:{secund < 10 ? "0" + secund : secund}
+        ,{mili < 10 ? "0" + mili : mili}
+      </span>
+      <div className="btn">
+        <button
+          onClick={() => {
+            setMili(0);
+            setSecund(0);
+            setMinut(0);
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          Restart
+        </button>
+        <button
+          onClick={() => {
+            clearInterval(milisec);
+          }}
+        >
+          Stop
+        </button>
+      </div>
     </div>
   );
 }
