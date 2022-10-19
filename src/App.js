@@ -5,14 +5,19 @@ function App() {
   const [mili, setMili] = useState(0);
   const [secund, setSecund] = useState(0);
   const [minut, setMinut] = useState(0);
+  const [start, setStart] = useState(false);
 
   let milisec;
+
   useEffect(() => {
-    milisec = setInterval(() => {
-      setMili(mili + 1);
-    }, 10);
+    if (start) {
+      milisec = setInterval(() => {
+        setMili(mili + 1);
+      }, 10);
+    }
+
     return () => clearInterval(milisec);
-  }, [mili]);
+  }, [mili, start]);
 
   if (mili === 99) {
     setSecund(secund + 1);
@@ -32,19 +37,27 @@ function App() {
       <div className="btn">
         <button
           onClick={() => {
+            setStart(true);
+          }}
+        >
+          Start
+        </button>
+        <button
+          onClick={() => {
+            clearInterval(milisec);
+            setStart(false);
+          }}
+        >
+          Stop
+        </button>
+        <button
+          onClick={() => {
             setMili(0);
             setSecund(0);
             setMinut(0);
           }}
         >
           Restart
-        </button>
-        <button
-          onClick={() => {
-            clearInterval(milisec);
-          }}
-        >
-          Stop
         </button>
       </div>
     </div>
