@@ -2,37 +2,37 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [mili, setMili] = useState(0);
+  const [mil, setMil] = useState(0);
   const [secund, setSecund] = useState(0);
-  const [minut, setMinut] = useState(0);
+  const [minute, setMinute] = useState(0);
   const [start, setStart] = useState(false);
 
-  let milisec;
-
+  
+  let milSec;
   useEffect(() => {
     if (start) {
-      milisec = setInterval(() => {
-        setMili(mili + 1);
+      milSec = setInterval(() => {
+        setMil(mil + 1);
       }, 10);
     }
 
-    return () => clearInterval(milisec);
-  }, [mili, start]);
+    return () => clearInterval(milSec);
+  }, [mil, start]);
 
-  if (mili === 99) {
+  if (mil === 99) {
     setSecund(secund + 1);
-    setMili(0);
+    setMil(0);
   }
   if (secund === 59) {
     setSecund(0);
-    setMinut(minut + 1);
+    setMinute(minute + 1);
   }
   return (
     <div className="stopwatch">
       <h1>Timer</h1>
       <span>
-        {minut < 10 ? "0" + minut : minut}:{secund < 10 ? "0" + secund : secund}
-        ,{mili < 10 ? "0" + mili : mili}
+        {minute < 10 ? "0" + minute : minute}:{secund < 10 ? "0" + secund : secund}
+        ,{mil < 10 ? "0" + mil : mil}
       </span>
       <div className="btn">
         <button
@@ -44,7 +44,7 @@ function App() {
         </button>
         <button
           onClick={() => {
-            clearInterval(milisec);
+            clearInterval(milSec);
             setStart(false);
           }}
         >
@@ -52,9 +52,9 @@ function App() {
         </button>
         <button
           onClick={() => {
-            setMili(0);
+            setMil(0);
             setSecund(0);
-            setMinut(0);
+            setMinute(0);
           }}
         >
           Restart
